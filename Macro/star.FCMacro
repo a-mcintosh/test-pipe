@@ -8,51 +8,56 @@ this_sketch = App.activeDocument().addObject('Sketcher::SketchObject','sk_star')
 import FreeCAD
 
 rot = App.Rotation(App.Vector(0, 0, 1),360/5)
-ratio = math.cos(2*math.pi/5)/math.cos(2*math.pi/10)
-FreeCAD.Console.PrintMessage("Length " + str(ratio) + "\n")
+ratio_inside = math.cos(2*math.pi/5)/math.cos(2*math.pi/10)
+ratio_outside = math.cos(2*math.pi/10)
+scale_factor = 1.0/(ratio_outside*ratio_inside)
+
+FreeCAD.Console.PrintMessage("ratio inside " + str(ratio_inside) + "\n")
+FreeCAD.Console.PrintMessage("ratio outside " + str(ratio_outside) + "\n")
+FreeCAD.Console.PrintMessage("Scale factor " + str(scale_factor) + "\n")
 vec = App.Vector(0, 25.4, 0)
 
 vec2 = App.Vector(0, -1, 0)
-vec2.Length = ratio * vec.Length
+vec2.Length = ratio_inside * vec.Length
 vec2 = rot.multVec(vec2)
 vec2 = rot.multVec(vec2)
 vec2 = rot.multVec(vec2)
 vec1 = vec2
 
-App.ActiveDocument.sk_star.addGeometry(Part.LineSegment(vec,vec2),True)
+App.ActiveDocument.sk_star.addGeometry(Part.LineSegment(vec,vec2),False)
 
 vec = rot.multVec(vec)
 App.ActiveDocument.sk_star.addGeometry(Part.LineSegment(vec,vec2),False)
 vec2 = rot.multVec(vec2)
 App.ActiveDocument.sk_star.addGeometry(Part.LineSegment(vec,vec2),False)
-App.ActiveDocument.sk_star.addGeometry(Part.LineSegment(vec1,vec2),True)
-vec1 = vec2
-
-vec = rot.multVec(vec)
-App.ActiveDocument.sk_star.addGeometry(Part.LineSegment(vec,vec2),False)
-vec2 = rot.multVec(vec2)
-App.ActiveDocument.sk_star.addGeometry(Part.LineSegment(vec,vec2),False)
-App.ActiveDocument.sk_star.addGeometry(Part.LineSegment(vec1,vec2),True)
+App.ActiveDocument.sk_star.addGeometry(Part.LineSegment(scale_factor*vec1,scale_factor*vec2),True)
 vec1 = vec2
 
 vec = rot.multVec(vec)
 App.ActiveDocument.sk_star.addGeometry(Part.LineSegment(vec,vec2),False)
 vec2 = rot.multVec(vec2)
 App.ActiveDocument.sk_star.addGeometry(Part.LineSegment(vec,vec2),False)
-App.ActiveDocument.sk_star.addGeometry(Part.LineSegment(vec1,vec2),True)
+App.ActiveDocument.sk_star.addGeometry(Part.LineSegment(scale_factor*vec1,scale_factor*vec2),True)
 vec1 = vec2
 
 vec = rot.multVec(vec)
 App.ActiveDocument.sk_star.addGeometry(Part.LineSegment(vec,vec2),False)
 vec2 = rot.multVec(vec2)
 App.ActiveDocument.sk_star.addGeometry(Part.LineSegment(vec,vec2),False)
-App.ActiveDocument.sk_star.addGeometry(Part.LineSegment(vec1,vec2),True)
+App.ActiveDocument.sk_star.addGeometry(Part.LineSegment(scale_factor*vec1,scale_factor*vec2),True)
 vec1 = vec2
 
 vec = rot.multVec(vec)
 App.ActiveDocument.sk_star.addGeometry(Part.LineSegment(vec,vec2),False)
 vec2 = rot.multVec(vec2)
-App.ActiveDocument.sk_star.addGeometry(Part.LineSegment(vec1,vec2),True)
+App.ActiveDocument.sk_star.addGeometry(Part.LineSegment(vec,vec2),False)
+App.ActiveDocument.sk_star.addGeometry(Part.LineSegment(scale_factor*vec1,scale_factor*vec2),True)
+vec1 = vec2
+
+vec = rot.multVec(vec)
+App.ActiveDocument.sk_star.addGeometry(Part.LineSegment(vec,vec2),False)
+vec2 = rot.multVec(vec2)
+App.ActiveDocument.sk_star.addGeometry(Part.LineSegment(scale_factor*vec1,scale_factor*vec2),True)
 
 #outer star
 App.ActiveDocument.sk_star.addConstraint(Sketcher.Constraint('Coincident',2,1,1,1)) 
@@ -78,4 +83,16 @@ App.ActiveDocument.sk_star.addConstraint(Sketcher.Constraint('Parallel',1,11))
 App.ActiveDocument.sk_star.addConstraint(Sketcher.Constraint('Parallel',2,7)) 
 App.ActiveDocument.sk_star.addConstraint(Sketcher.Constraint('Parallel',5,10)) 
 App.ActiveDocument.sk_star.addConstraint(Sketcher.Constraint('Parallel',8,13)) 
+#
+App.ActiveDocument.sk_star.addConstraint(Sketcher.Constraint('PointOnObject',2,2,0)) 
+App.ActiveDocument.sk_star.addConstraint(Sketcher.Constraint('PointOnObject',5,2,2)) 
+App.ActiveDocument.sk_star.addConstraint(Sketcher.Constraint('PointOnObject',8,2,5)) 
+App.ActiveDocument.sk_star.addConstraint(Sketcher.Constraint('PointOnObject',11,2,1)) 
+# inner star parallel constraints
+App.ActiveDocument.sk_star.addConstraint(Sketcher.Constraint('Parallel',6,2)) 
+App.ActiveDocument.sk_star.addConstraint(Sketcher.Constraint('Parallel',3,4)) 
+App.ActiveDocument.sk_star.addConstraint(Sketcher.Constraint('Parallel',14,1)) 
+App.ActiveDocument.sk_star.addConstraint(Sketcher.Constraint('Parallel',12,13)) 
+App.ActiveDocument.sk_star.addConstraint(Sketcher.Constraint('Parallel',9,10)) 
+
 # Macro End: /home/amcintosh/Documents/FreeCAD/tests/Macro/star.FCMacro +++++++++++++++++++++++++++++++++++++++++++++++++
