@@ -1,0 +1,49 @@
+# -*- coding: utf-8 -*-
+
+# Macro Begin: /home/amcintosh/Documents/FreeCAD/tests/Macro/star.FCMacro +++++++++++++++++++++++++++++++++++++++++++++++++
+import FreeCAD
+
+rot = App.Rotation(App.Vector(0, 0, 1),360/5)
+
+vec = App.Vector(0, 25.4, 0)
+
+vec2 = App.Vector(0, -1, 0)
+vec2.Length = vec.Length*(math.cos(2*math.pi/5)/math.cos(2*math.pi/10))
+vec2 = rot.multVec(vec2)
+vec2 = rot.multVec(vec2)
+vec2 = rot.multVec(vec2)
+
+App.ActiveDocument.Sketch.addGeometry(Part.LineSegment(vec,vec2),True)
+
+App.ActiveDocument.Sketch.addGeometry(Part.Point(vec))
+vec = rot.multVec(vec)
+App.ActiveDocument.Sketch.addGeometry(Part.Point(vec2))
+vec2 = rot.multVec(vec2)
+App.ActiveDocument.Sketch.addGeometry(Part.LineSegment(vec,vec2),False)
+
+App.ActiveDocument.Sketch.addGeometry(Part.Point(vec))
+vec = rot.multVec(vec)
+App.ActiveDocument.Sketch.addGeometry(Part.Point(vec2))
+vec2 = rot.multVec(vec2)
+App.ActiveDocument.Sketch.addGeometry(Part.LineSegment(vec,vec2),False)
+
+App.ActiveDocument.Sketch.addGeometry(Part.Point(vec))
+vec = rot.multVec(vec)
+App.ActiveDocument.Sketch.addGeometry(Part.Point(vec2))
+vec2 = rot.multVec(vec2)
+App.ActiveDocument.Sketch.addGeometry(Part.LineSegment(vec,vec2),False)
+
+App.ActiveDocument.Sketch.addGeometry(Part.Point(vec))
+vec = rot.multVec(vec)
+App.ActiveDocument.Sketch.addGeometry(Part.Point(vec2))
+vec2 = rot.multVec(vec2)
+App.ActiveDocument.Sketch.addGeometry(Part.LineSegment(vec,vec2),False)
+
+App.ActiveDocument.Sketch.addGeometry(Part.Point(vec))
+vec = rot.multVec(vec)
+App.ActiveDocument.Sketch.addGeometry(Part.Point(vec2))
+vec2 = rot.multVec(vec2)
+
+
+App.ActiveDocument.recompute()
+# Macro End: /home/amcintosh/Documents/FreeCAD/tests/Macro/star.FCMacro +++++++++++++++++++++++++++++++++++++++++++++++++
