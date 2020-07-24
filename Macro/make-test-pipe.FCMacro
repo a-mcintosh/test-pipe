@@ -1,0 +1,70 @@
+# -*- coding: utf-8 -*-
+
+# Macro Begin: /home/amcintosh/Documents/FreeCAD/tests/Macro/make-test-drawing.FCMacro +++++++++++++++++++++++++++++++++++++++++++++++++
+import FreeCAD
+import PartDesign
+import PartDesignGui
+import Sketcher
+import math
+
+App.newDocument("Unnamed")
+App.activeDocument().addObject('PartDesign::Body','Body')
+App.ActiveDocument.addObject('PartDesign::AdditiveBox','Box')
+App.ActiveDocument.Body.addObject(App.activeDocument().Box)
+App.ActiveDocument.recompute()
+App.ActiveDocument.Box.Length=304.800
+App.ActiveDocument.Box.Width=304.800
+App.ActiveDocument.Box.Height=304.800
+
+App.ActiveDocument.recompute()
+App.ActiveDocument.recompute()
+App.activeDocument().Body.newObject('PartDesign::Plane','DatumPlane')
+App.activeDocument().DatumPlane.Support = [(App.getDocument('Unnamed').Box,'Vertex5'),(App.getDocument('Unnamed').Box,'Vertex4'),(App.getDocument('Unnamed').Box,'Vertex6')]
+App.activeDocument().DatumPlane.MapMode = 'ThreePointsPlane'
+App.activeDocument().recompute()
+App.ActiveDocument.DatumPlane.MapReversed = False
+App.ActiveDocument.DatumPlane.Support = [(App.getDocument('Unnamed').Box,'Vertex5'),(App.getDocument('Unnamed').Box,'Vertex4'),(App.getDocument('Unnamed').Box,'Vertex6')]
+App.ActiveDocument.DatumPlane.MapMode = 'ThreePointsPlane'
+App.ActiveDocument.recompute()
+#Gui.ActiveDocument.resetEdit()
+App.activeDocument().Body.newObject('Sketcher::SketchObject','Sketch')
+App.activeDocument().Sketch.Support = (App.activeDocument().DatumPlane, [''])
+App.activeDocument().Sketch.MapMode = 'FlatFace'
+App.ActiveDocument.recompute()
+#Gui.activeDocument().activeView().viewIsometric()
+App.ActiveDocument.Sketch.addGeometry(Part.Point(App.Vector(143.511322,203.200000,0)))
+App.ActiveDocument.recompute()
+App.ActiveDocument.Sketch.addGeometry(Part.Point(App.Vector(-287.379808,-101.600000,0)))
+App.ActiveDocument.recompute()
+App.ActiveDocument.Sketch.addGeometry(Part.LineSegment(App.Vector(143.514826,203.200000,0),App.Vector(-287.376382,-101.600000,0)),False)
+App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Coincident',2,1,0,1)) 
+App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Coincident',2,2,1,1)) 
+App.ActiveDocument.recompute()
+#Gui.activeDocument().activeView().viewIsometric()
+App.getDocument('Unnamed').recompute()
+App.activeDocument().Body.newObject('PartDesign::Plane','DatumPlane001')
+App.activeDocument().DatumPlane001.Support = [(App.getDocument('Unnamed').Box,'Vertex4'),(App.getDocument('Unnamed').Box,'Vertex5')]
+App.activeDocument().DatumPlane001.MapMode = 'InertialCS'
+App.activeDocument().recompute()
+App.ActiveDocument.recompute()
+
+App.activeDocument().Body.newObject('PartDesign::Plane','DatumPlane007')
+App.activeDocument().DatumPlane001.Support = [(App.getDocument('Unnamed').Box,'Vertex5'),(App.getDocument('Unnamed').Box,'Vertex4')]
+App.activeDocument().DatumPlane001.MapMode = 'InertialCS'
+App.activeDocument().recompute()
+App.ActiveDocument.DatumPlane.MapReversed = False
+App.ActiveDocument.DatumPlane.Support = [(App.getDocument('Unnamed').Box,'Vertex5'),(App.getDocument('Unnamed').Box,'Vertex4'),(App.getDocument('Unnamed').Box,'Vertex6')]
+App.ActiveDocument.DatumPlane.MapMode = 'ThreePointsPlane'
+App.ActiveDocument.recompute()
+App.activeDocument().Body.newObject('Sketcher::SketchObject','Sketch001')
+App.activeDocument().Sketch001.Support = (App.activeDocument().DatumPlane001, '')
+App.activeDocument().Sketch001.MapMode = 'FlatFace'
+App.ActiveDocument.recompute()
+
+#Gui.activateWorkbench('PartDesignWorkbench')
+App.activeDocument().Body.newObject("PartDesign::SubtractivePipe","SubtractivePipe")
+App.activeDocument().SubtractivePipe.Profile = App.activeDocument().Sketch001
+App.ActiveDocument.recompute()
+#Gui.activeDocument().hide("Sketch001")
+App.ActiveDocument.recompute()
+# Macro End: /home/amcintosh/Documents/FreeCAD/tests/Macro/make-test-drawing.FCMacro +++++++++++++++++++++++++++++++++++++++++++++++++
