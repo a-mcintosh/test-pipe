@@ -49,6 +49,34 @@ App.ActiveDocument.Sketch.addGeometry(Part.LineSegment(vec,vec2),False)
 App.ActiveDocument.Sketch.addGeometry(Part.Point(vec2))
 vec2 = rot.multVec(vec2)
 
+App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Coincident',3,1,0,2)) 
+App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Coincident',3,1,2,2)) 
 
+App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Coincident',7,1,4,2)) 
+App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Coincident',7,1,6,2)) 
+
+App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Coincident',11,1,8,2)) 
+App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Coincident',11,1,10,2)) 
+
+App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Coincident',15,1,12,2)) 
+App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Coincident',15,1,14,2)) 
+
+App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Coincident',19,1,16,2)) 
+App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Coincident',19,1,18,2)) 
+
+App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Coincident',5,1,2,1)) 
+App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Coincident',5,1,4,1)) 
+
+App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Coincident',9,1,6,1)) 
+App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Coincident',9,1,8,1)) 
+
+App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Coincident',13,1,10,1)) 
+App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Coincident',13,1,12,1)) 
+
+App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Coincident',17,1,14,1)) 
+App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Coincident',17,1,16,1)) 
+
+App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Coincident',1,1,18,1)) 
+App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Coincident',1,1,0,1)) 
 App.ActiveDocument.recompute()
 # Macro End: /home/amcintosh/Documents/FreeCAD/tests/Macro/star.FCMacro +++++++++++++++++++++++++++++++++++++++++++++++++
