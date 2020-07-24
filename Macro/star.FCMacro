@@ -12,71 +12,46 @@ vec2.Length = vec.Length*(math.cos(2*math.pi/5)/math.cos(2*math.pi/10))
 vec2 = rot.multVec(vec2)
 vec2 = rot.multVec(vec2)
 vec2 = rot.multVec(vec2)
+vec1 = vec2
 
 App.ActiveDocument.Sketch.addGeometry(Part.LineSegment(vec,vec2),True)
 
-App.ActiveDocument.Sketch.addGeometry(Part.Point(vec))
 vec = rot.multVec(vec)
 App.ActiveDocument.Sketch.addGeometry(Part.LineSegment(vec,vec2),False)
-App.ActiveDocument.Sketch.addGeometry(Part.Point(vec2))
 vec2 = rot.multVec(vec2)
 App.ActiveDocument.Sketch.addGeometry(Part.LineSegment(vec,vec2),False)
+App.ActiveDocument.Sketch.addGeometry(Part.LineSegment(vec1,vec2),True)
+vec1 = vec2
 
-App.ActiveDocument.Sketch.addGeometry(Part.Point(vec))
 vec = rot.multVec(vec)
 App.ActiveDocument.Sketch.addGeometry(Part.LineSegment(vec,vec2),False)
-App.ActiveDocument.Sketch.addGeometry(Part.Point(vec2))
 vec2 = rot.multVec(vec2)
 App.ActiveDocument.Sketch.addGeometry(Part.LineSegment(vec,vec2),False)
+App.ActiveDocument.Sketch.addGeometry(Part.LineSegment(vec1,vec2),True)
+vec1 = vec2
 
-App.ActiveDocument.Sketch.addGeometry(Part.Point(vec))
 vec = rot.multVec(vec)
 App.ActiveDocument.Sketch.addGeometry(Part.LineSegment(vec,vec2),False)
-App.ActiveDocument.Sketch.addGeometry(Part.Point(vec2))
 vec2 = rot.multVec(vec2)
 App.ActiveDocument.Sketch.addGeometry(Part.LineSegment(vec,vec2),False)
+App.ActiveDocument.Sketch.addGeometry(Part.LineSegment(vec1,vec2),True)
+vec1 = vec2
 
-App.ActiveDocument.Sketch.addGeometry(Part.Point(vec))
 vec = rot.multVec(vec)
 App.ActiveDocument.Sketch.addGeometry(Part.LineSegment(vec,vec2),False)
-App.ActiveDocument.Sketch.addGeometry(Part.Point(vec2))
 vec2 = rot.multVec(vec2)
 App.ActiveDocument.Sketch.addGeometry(Part.LineSegment(vec,vec2),False)
+App.ActiveDocument.Sketch.addGeometry(Part.LineSegment(vec1,vec2),True)
+vec1 = vec2
 
-App.ActiveDocument.Sketch.addGeometry(Part.Point(vec))
 vec = rot.multVec(vec)
 App.ActiveDocument.Sketch.addGeometry(Part.LineSegment(vec,vec2),False)
-App.ActiveDocument.Sketch.addGeometry(Part.Point(vec2))
 vec2 = rot.multVec(vec2)
+App.ActiveDocument.Sketch.addGeometry(Part.LineSegment(vec1,vec2),True)
 
-App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Coincident',3,1,0,2)) 
-App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Coincident',3,1,2,2)) 
-
-App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Coincident',7,1,4,2)) 
-App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Coincident',7,1,6,2)) 
-
-App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Coincident',11,1,8,2)) 
-App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Coincident',11,1,10,2)) 
-
-App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Coincident',15,1,12,2)) 
-App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Coincident',15,1,14,2)) 
-
-App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Coincident',19,1,16,2)) 
-App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Coincident',19,1,18,2)) 
-
-App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Coincident',5,1,2,1)) 
+App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Coincident',2,1,1,1)) 
 App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Coincident',5,1,4,1)) 
-
-App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Coincident',9,1,6,1)) 
-App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Coincident',9,1,8,1)) 
-
-App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Coincident',13,1,10,1)) 
-App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Coincident',13,1,12,1)) 
-
-App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Coincident',17,1,14,1)) 
-App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Coincident',17,1,16,1)) 
-
-App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Coincident',1,1,18,1)) 
-App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Coincident',1,1,0,1)) 
-App.ActiveDocument.recompute()
+App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Coincident',8,1,7,1)) 
+App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Coincident',11,1,10,1)) 
+App.ActiveDocument.Sketch.addConstraint(Sketcher.Constraint('Coincident',13,1,0,1)) 
 # Macro End: /home/amcintosh/Documents/FreeCAD/tests/Macro/star.FCMacro +++++++++++++++++++++++++++++++++++++++++++++++++
