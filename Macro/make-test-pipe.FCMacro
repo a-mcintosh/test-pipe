@@ -45,16 +45,120 @@ App.ActiveDocument.Body.newObject('PartDesign::Plane','dp_starSupport')
 App.ActiveDocument.dp_starSupport.Support = [(App.ActiveDocument.Box,'Vertex4'),(App.ActiveDocument.Box,'Vertex5')]
 App.ActiveDocument.dp_starSupport.MapMode = 'InertialCS'
 
-App.ActiveDocument.Body.newObject('Sketcher::SketchObject','Sketch001')
-App.ActiveDocument.Sketch001.Support = (App.ActiveDocument.dp_starSupport, '')
-App.ActiveDocument.Sketch001.MapMode = 'FlatFace'
-App.ActiveDocument.recompute()
+this_sketch = App.activeDocument().addObject('Sketcher::SketchObject','sk_star')
+App.ActiveDocument.sk_star.Support = (App.ActiveDocument.dp_starSupport, '')
+App.ActiveDocument.sk_star.MapMode = 'FlatFace'
 
-#Gui.activateWorkbench('PartDesignWorkbench')
+rot = App.Rotation(App.Vector(0, 0, 1),360/5)
+ratio_inside = math.cos(2*math.pi/5)/math.cos(2*math.pi/10)
+ratio_outside = math.cos(2*math.pi/10)
+scale_factor = 1.0/(ratio_outside*ratio_inside)
+
+FreeCAD.Console.PrintMessage("ratio inside " + str(ratio_inside) + "\n")
+FreeCAD.Console.PrintMessage("ratio outside " + str(ratio_outside) + "\n")
+FreeCAD.Console.PrintMessage("Scale factor " + str(scale_factor) + "\n")
+vec = App.Vector(0, 25.4, 0)
+
+vec2 = App.Vector(0, -1, 0)
+vec2.Length = ratio_inside * vec.Length
+vec2 = rot.multVec(vec2)
+vec2 = rot.multVec(vec2)
+vec2 = rot.multVec(vec2)
+vec1 = vec2
+
+this_sketch.addGeometry(Part.LineSegment(vec,vec2),False)
+
+vec = rot.multVec(vec)
+this_sketch.addGeometry(Part.LineSegment(vec,vec2),False)
+vec2 = rot.multVec(vec2)
+this_sketch.addGeometry(Part.LineSegment(vec,vec2),False)
+this_sketch.addGeometry(Part.LineSegment(scale_factor*vec1,scale_factor*vec2),True)
+vec1 = vec2
+
+vec = rot.multVec(vec)
+this_sketch.addGeometry(Part.LineSegment(vec,vec2),False)
+vec2 = rot.multVec(vec2)
+this_sketch.addGeometry(Part.LineSegment(vec,vec2),False)
+this_sketch.addGeometry(Part.LineSegment(scale_factor*vec1,scale_factor*vec2),True)
+vec1 = vec2
+
+vec = rot.multVec(vec)
+this_sketch.addGeometry(Part.LineSegment(vec,vec2),False)
+vec2 = rot.multVec(vec2)
+this_sketch.addGeometry(Part.LineSegment(vec,vec2),False)
+this_sketch.addGeometry(Part.LineSegment(scale_factor*vec1,scale_factor*vec2),True)
+vec1 = vec2
+
+vec = rot.multVec(vec)
+this_sketch.addGeometry(Part.LineSegment(vec,vec2),False)
+vec2 = rot.multVec(vec2)
+this_sketch.addGeometry(Part.LineSegment(vec,vec2),False)
+this_sketch.addGeometry(Part.LineSegment(scale_factor*vec1,scale_factor*vec2),True)
+vec1 = vec2
+
+vec = rot.multVec(vec)
+this_sketch.addGeometry(Part.LineSegment(vec,vec2),False)
+vec2 = rot.multVec(vec2)
+this_sketch.addGeometry(Part.LineSegment(scale_factor*vec1,scale_factor*vec2),True)
+
+#outer star
+this_sketch.addConstraint(Sketcher.Constraint('Coincident',2,1,1,1)) 
+this_sketch.addConstraint(Sketcher.Constraint('Coincident',0,2,1,2)) 
+this_sketch.addConstraint(Sketcher.Constraint('Coincident',5,1,4,1)) 
+this_sketch.addConstraint(Sketcher.Constraint('Coincident',8,1,7,1)) 
+this_sketch.addConstraint(Sketcher.Constraint('Coincident',11,1,10,1)) 
+this_sketch.addConstraint(Sketcher.Constraint('Coincident',13,1,0,1)) 
+#inner star
+this_sketch.addConstraint(Sketcher.Constraint('Coincident',4,2,2,2)) 
+this_sketch.addConstraint(Sketcher.Constraint('Coincident',7,2,5,2)) 
+this_sketch.addConstraint(Sketcher.Constraint('Coincident',10,2,8,2)) 
+this_sketch.addConstraint(Sketcher.Constraint('Coincident',13,2,11,2))
+# inner pentangle
+this_sketch.addConstraint(Sketcher.Constraint('Coincident',3,2,6,1)) 
+this_sketch.addConstraint(Sketcher.Constraint('Coincident',6,2,9,1)) 
+this_sketch.addConstraint(Sketcher.Constraint('Coincident',9,2,12,1)) 
+this_sketch.addConstraint(Sketcher.Constraint('Coincident',12,2,14,1)) 
+this_sketch.addConstraint(Sketcher.Constraint('Coincident',14,2,3,1)) 
+#make arms have parallel segments
+this_sketch.addConstraint(Sketcher.Constraint('Parallel',0,4)) 
+this_sketch.addConstraint(Sketcher.Constraint('Parallel',1,11)) 
+this_sketch.addConstraint(Sketcher.Constraint('Parallel',2,7)) 
+this_sketch.addConstraint(Sketcher.Constraint('Parallel',5,10)) 
+this_sketch.addConstraint(Sketcher.Constraint('Parallel',8,13)) 
+#
+this_sketch.addConstraint(Sketcher.Constraint('PointOnObject',2,2,0)) 
+this_sketch.addConstraint(Sketcher.Constraint('PointOnObject',5,2,2)) 
+this_sketch.addConstraint(Sketcher.Constraint('PointOnObject',8,2,5)) 
+this_sketch.addConstraint(Sketcher.Constraint('PointOnObject',11,2,1)) 
+# inner star parallel constraints
+this_sketch.addConstraint(Sketcher.Constraint('Parallel',6,2)) 
+this_sketch.addConstraint(Sketcher.Constraint('Parallel',3,4)) 
+this_sketch.addConstraint(Sketcher.Constraint('Parallel',14,1)) 
+this_sketch.addConstraint(Sketcher.Constraint('Parallel',12,13)) 
+this_sketch.addConstraint(Sketcher.Constraint('Parallel',9,10)) 
+# outer star parallel constraints (parallelograms)
+this_sketch.addConstraint(Sketcher.Constraint('Equal',3,14)) 
+this_sketch.addConstraint(Sketcher.Constraint('Equal',3,6)) 
+this_sketch.addConstraint(Sketcher.Constraint('Equal',6,9)) 
+this_sketch.addConstraint(Sketcher.Constraint('Equal',9,12)) 
+# inner star equal forward leg length
+this_sketch.addConstraint(Sketcher.Constraint('Equal',0,2)) 
+this_sketch.addConstraint(Sketcher.Constraint('Equal',2,5)) 
+this_sketch.addConstraint(Sketcher.Constraint('Equal',5,8)) 
+#this_sketch.addConstraint(Sketcher.Constraint('Equal',8,11)) 
+# tie shield and star together
+this_sketch.addConstraint(Sketcher.Constraint('PointOnObject',1,1,3)) 
+this_sketch.addConstraint(Sketcher.Constraint('PointOnObject',4,1,6)) 
+this_sketch.addConstraint(Sketcher.Constraint('PointOnObject',7,1,9)) 
+this_sketch.addConstraint(Sketcher.Constraint('PointOnObject',10,1,12)) 
+this_sketch.addConstraint(Sketcher.Constraint('PointOnObject',0,1,14)) 
+#
+this_sketch.addConstraint(Sketcher.Constraint('DistanceY',6,2,-1,1,31.396127)) 
+this_sketch.addConstraint(Sketcher.Constraint('DistanceY',-1,1,0,1,25.400165)) 
+
 App.ActiveDocument.Body.newObject("PartDesign::SubtractivePipe","SubtractivePipe")
-App.ActiveDocument.SubtractivePipe.Profile = App.ActiveDocument.Sketch001
-App.ActiveDocument.recompute()
-#Gui.activeDocument().hide("Sketch001")
+App.ActiveDocument.SubtractivePipe.Profile = App.ActiveDocument.sk_star
 App.ActiveDocument.recompute()
 Gui.activeDocument().activeView().viewIsometric()
+Gui.SendMsgToActiveView("ViewFit")
 # Macro End: /home/amcintosh/Documents/FreeCAD/tests/Macro/make-test-drawing.FCMacro +++++++++++++++++++++++++++++++++++++++++++++++++
