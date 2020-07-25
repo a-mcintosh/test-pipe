@@ -19,18 +19,18 @@ App.ActiveDocument.Box.Height=304.800
 Gui.getDocument("test_pipe").getObject("Box").Visibility=True
 Gui.activeView().setActiveObject('pdbody',App.ActiveDocument.findObjects('PartDesign::Body')[0])
 App.ActiveDocument.Body.newObject('PartDesign::Plane','dp_diagonal')
+FreeCAD.Console.PrintMessage("line 22\n")
+#  --  if the following recompute is removed, then inexplicable trouble.
+App.ActiveDocument.recompute()
 App.ActiveDocument.dp_diagonal.Support = [(App.ActiveDocument.Box,'Vertex5'),(App.ActiveDocument.Box,'Vertex4'),(App.ActiveDocument.Box,'Vertex6')]
 FreeCAD.Console.PrintMessage("line 23\n")
 App.activeDocument().dp_diagonal.MapMode = 'ThreePointsPlane'
 App.ActiveDocument.dp_diagonal.MapReversed = False
 FreeCAD.Console.PrintMessage("line 26\n")
 # -------------------------------------
-Gui.ActiveDocument.resetEdit()
 App.ActiveDocument.Body.newObject('Sketcher::SketchObject','sk_diagonal')
 App.ActiveDocument.sk_diagonal.Support = (App.ActiveDocument.dp_diagonal, [''])
 App.ActiveDocument.sk_diagonal.MapMode = 'FlatFace'
-App.ActiveDocument.recompute()
-#Gui.activeDocument().activeView().viewIsometric()
 App.ActiveDocument.sk_diagonal.addGeometry(Part.Point(App.Vector(143.511322,203.200000,0)))
 App.ActiveDocument.recompute()
 App.ActiveDocument.sk_diagonal.addGeometry(Part.Point(App.Vector(-287.379808,-101.600000,0)))
@@ -43,10 +43,11 @@ App.ActiveDocument.recompute()
 App.ActiveDocument.recompute()
 
 App.ActiveDocument.Body.newObject('PartDesign::Plane','dp_starSupport')
+App.ActiveDocument.dp_starSupport.AttachmentOffset.Base.z=-25.4*5.182
 App.ActiveDocument.dp_starSupport.Support = [(App.ActiveDocument.sk_diagonal,'Edge1')]
 App.ActiveDocument.dp_starSupport.MapMode = 'NormalToEdge'
-
-this_sketch = App.activeDocument().addObject('Sketcher::SketchObject','sk_star')
+# -------------------------------------------1
+this_sketch = App.ActiveDocument.Body.newObject('Sketcher::SketchObject','sk_star')
 App.ActiveDocument.sk_star.Support = (App.ActiveDocument.dp_starSupport, '')
 App.ActiveDocument.sk_star.MapMode = 'FlatFace'
 
@@ -159,19 +160,16 @@ this_sketch.addConstraint(Sketcher.Constraint('PointOnObject',0,1,14))
 #
 this_sketch.addConstraint(Sketcher.Constraint('DistanceY',6,2,-1,1,scale_grand*31.396127)) 
 this_sketch.addConstraint(Sketcher.Constraint('DistanceY',-1,1,0,1,scale_grand*25.400165)) 
+# -------------------------------------------
 
 this_pipe = App.ActiveDocument.Body.newObject("PartDesign::SubtractivePipe","SubtractivePipe")
-Gui.ActiveDocument.getObject(this_pipe.Name).Transparency = 50
 App.ActiveDocument.SubtractivePipe.Profile = App.ActiveDocument.sk_star
 App.ActiveDocument.SubtractivePipe.Spine = App.ActiveDocument.sk_diagonal
 Gui.activeDocument().hide(App.ActiveDocument.Box.Name)
-FreeCAD.Console.PrintMessage("line 170\n")
 App.ActiveDocument.recompute()
 FreeCAD.Console.PrintMessage("line 172\n")
+Gui.ActiveDocument.SubtractivePipe.ShapeColor=(0.545098066329956, 0.7372549176216125, 0.4470588266849518, 0.0)
+Gui.ActiveDocument.getObject(this_pipe.Name).Transparency = 50
 Gui.activeDocument().activeView().setCameraOrientation(App.Rotation(0.3421, 0.385, 0.34, 0.758))
 Gui.SendMsgToActiveView("ViewFit")
-Gui.ActiveDocument.SubtractivePipe.ShapeColor=(0.545098066329956, 0.7372549176216125, 0.4470588266849518, 0.0)
-# test code for other project next lines
-setLevel(getLevel()+1)
-FreeCAD.Console.PrintMessage("level " + str(getLevel()) + "\n")
-# Macro End: /home/amcintosh/Documents/FreeCAD/tests/Macro/make-test-drawing.FCMacro +++++++++++++++++++++++++++++++++++++++++++++++++
+# Macro End: /home/amcintosh/Documents/FreeCAD/tests/Macro/make-test-pipe.FCMacro +++++++++++++++++++++++++++++++++++++++++++++++++
