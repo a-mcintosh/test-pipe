@@ -53,14 +53,17 @@ rot = App.Rotation(App.Vector(0, 0, 1),360/5)
 ratio_inside = math.cos(2*math.pi/5)/math.cos(2*math.pi/10)
 ratio_outside = math.cos(2*math.pi/10)
 scale_factor = 1.0/(ratio_outside*ratio_inside)
+scale_grand = 5
 
 FreeCAD.Console.PrintMessage("ratio inside " + str(ratio_inside) + "\n")
 FreeCAD.Console.PrintMessage("ratio outside " + str(ratio_outside) + "\n")
 FreeCAD.Console.PrintMessage("Scale factor " + str(scale_factor) + "\n")
 vec = App.Vector(0, 25.4, 0)
+vec.Length *= scale_grand
 
 vec2 = App.Vector(0, -1, 0)
 vec2.Length = ratio_inside * vec.Length
+
 vec2 = rot.multVec(vec2)
 vec2 = rot.multVec(vec2)
 vec2 = rot.multVec(vec2)
@@ -153,8 +156,8 @@ this_sketch.addConstraint(Sketcher.Constraint('PointOnObject',7,1,9))
 this_sketch.addConstraint(Sketcher.Constraint('PointOnObject',10,1,12)) 
 this_sketch.addConstraint(Sketcher.Constraint('PointOnObject',0,1,14)) 
 #
-this_sketch.addConstraint(Sketcher.Constraint('DistanceY',6,2,-1,1,31.396127)) 
-this_sketch.addConstraint(Sketcher.Constraint('DistanceY',-1,1,0,1,25.400165)) 
+this_sketch.addConstraint(Sketcher.Constraint('DistanceY',6,2,-1,1,scale_grand*31.396127)) 
+this_sketch.addConstraint(Sketcher.Constraint('DistanceY',-1,1,0,1,scale_grand*25.400165)) 
 
 App.ActiveDocument.Body.newObject("PartDesign::SubtractivePipe","SubtractivePipe")
 App.ActiveDocument.SubtractivePipe.Profile = App.ActiveDocument.sk_star
