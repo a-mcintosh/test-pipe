@@ -5,6 +5,7 @@ import FreeCAD
 import PartDesign
 import PartDesignGui
 import Sketcher
+import Part
 import math
 
 App.newDocument("test-pipe")
