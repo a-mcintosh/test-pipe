@@ -43,7 +43,7 @@ App.ActiveDocument.recompute()
 App.ActiveDocument.recompute()
 
 App.ActiveDocument.Body.newObject('PartDesign::Plane','dp_starSupport')
-App.ActiveDocument.dp_starSupport.AttachmentOffset.Base.z=-25.4*5.182
+App.ActiveDocument.dp_starSupport.AttachmentOffset.Base.z=-25.4*12*1.732
 App.ActiveDocument.dp_starSupport.Support = [(App.ActiveDocument.sk_diagonal,'Edge1')]
 App.ActiveDocument.dp_starSupport.MapMode = 'NormalToEdge'
 # -------------------------------------------1
